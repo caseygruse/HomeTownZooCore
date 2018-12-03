@@ -21,7 +21,8 @@ namespace HomeTownZooCore.Controllers
         // GET: Animals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Animal.ToListAsync());
+            IEnumerable<Animal> animals = await AnimalRepository.GetAnimals(_context);
+            return View(animals);
         }
 
         // GET: Animals/Details/5
@@ -33,7 +34,7 @@ namespace HomeTownZooCore.Controllers
             }
 
             var animal = await _context.Animal
-                .FirstOrDefaultAsync(m => m.AnimalId == id);
+                .FirstOrDefaultAsync(m => m.AnimalId == id.Value);
             if (animal == null)
             {
                 return NotFound();
@@ -53,7 +54,7 @@ namespace HomeTownZooCore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AnimalId,Name,Breed")] Animal animal)
+        public async Task<IActionResult> Create([Bind("Name,Breed")] Animal animal)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +86,7 @@ namespace HomeTownZooCore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AnimalId,Name,Breed")] Animal animal)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Breed")] Animal animal)
         {
             if (id != animal.AnimalId)
             {

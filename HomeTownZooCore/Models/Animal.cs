@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeTownZooCore.Models
 {
-    public class Animal
+    public class Animal : IAnimal
     {
         [Key]
         public int AnimalId { get; set; }
@@ -15,8 +15,8 @@ namespace HomeTownZooCore.Models
         public string Name { get; set; }
         [Required]
         public string Breed { get; set; }
-
+        [Display(Name="Adoption Date")]
+        [DataType(DataType.Date)]
         public DateTime? AdoptionDate { get; set; }
-
     }
 }
