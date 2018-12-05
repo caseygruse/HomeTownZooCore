@@ -117,32 +117,34 @@ namespace HomeTownZooCore.Controllers
         }
 
         // GET: Animals/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var animal = await _context.Animal
-                .FirstOrDefaultAsync(m => m.AnimalId == id);
-            if (animal == null)
-            {
-                return NotFound();
-            }
+        //    var animal = await _context.Animal
+        //        .FirstOrDefaultAsync(m => m.AnimalId == id);
+        //    if (animal == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(animal);
-        }
+        //    return View(animal);
+        //}
 
         // POST: Animals/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<string> DeleteConfirmed()
         {
+            int id = Convert.ToInt32(Request.Form["id"]);
             var animal = await _context.Animal.FindAsync(id);
             _context.Animal.Remove(animal);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return "success";
         }
 
         private bool AnimalExists(int id)

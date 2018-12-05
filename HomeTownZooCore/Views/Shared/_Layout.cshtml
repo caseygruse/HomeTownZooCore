@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HomeTownZooCore</title>
 
+    @RenderSection("head", false)
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -68,7 +69,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <!-- this is where you should add scripts so there is not conflicts with jQuery-->
     @RenderSection("Scripts", required: false)
 </body>
 </html>

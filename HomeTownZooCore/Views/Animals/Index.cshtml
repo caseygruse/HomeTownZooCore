@@ -4,6 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
+@section head{ 
+
+    <style> 
+            td > form{display:inline}        
+    </style>
+}
+
 <h2>Index</h2>
 
 <p>
@@ -33,9 +40,36 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AnimalId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.AnimalId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AnimalId">Delete</a>
+                @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AnimalId">Delete</a>*@
+                <form asp-action="Delete" asp-controller="Animals">
+                    <input type="hidden" name="id" value="@item.AnimalId" />
+                    <input type="submit"  class="btn btn-danger" value="Delete" />
+                    
+                </form>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts{ 
+    <script>
+        //when DOM is ready
+        $(function () {
+            //JQuery version
+            //let allForms = $("td > form");
+            //no JQuery
+            let allForms = document.querySelectorAll("td > form");
+            for (let i = 0; i < allForms.length; i++) {
+                allForms[i].onsubmit = deleteAnimal;
+            }
+        });
+
+        function deleteAnimal() {
+            alert("test");
+            this.preventDefault();
+        }
+    </script>
+        
+    
+}
