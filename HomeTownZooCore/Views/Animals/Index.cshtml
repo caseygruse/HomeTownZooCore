@@ -43,7 +43,9 @@
                 @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AnimalId">Delete</a>*@
                 <form asp-action="Delete" asp-controller="Animals">
                     <input type="hidden" name="id" value="@item.AnimalId" />
-                    <input type="submit"  class="btn btn-danger" value="Delete" />
+                    <input type="submit"  class="btn btn-danger" value="Delete" 
+                           data-animal-id="@item.AnimalId"
+                           data-animal-name="@item.Name"/>
                     
                 </form>
             </td>
@@ -59,15 +61,41 @@
             //JQuery version
             //let allForms = $("td > form");
             //no JQuery
-            let allForms = document.querySelectorAll("td > form");
+            let allForms = document.querySelectorAll("td > form > input[type=button]");
             for (let i = 0; i < allForms.length; i++) {
-                allForms[i].onsubmit = deleteAnimal;
+                allForms[i].onclick = deleteAnimal;
             }
         });
 
-        function deleteAnimal() {
-            alert("test");
-            this.preventDefault();
+        function deleteAnimal(evt) {
+            console.log("delete animal was called");
+
+            console.log(this);
+            var btn = this;
+            var animalName = btn.getAttribute("data-animal-name");
+
+            var confirmation = confirm("Are you sure you want to delete " + animalName);
+
+            //evt.preventDefault();
+          
+
+            if (confirmation) {
+                //send request using AJAX
+                $.post("/Animals/Delete", { id: btn.id })
+                    .done(function (data) {
+                        //data would be the return value from the server.
+                    })
+                    .fail(function () {
+                        //data is not being deleted (server issue)
+                        alert("animal cant be deleted at this time");
+                    })
+                    .always(function () {
+                        //always executes no matter success or failure
+                    });
+            }
+           
+
+            
         }
     </script>
         

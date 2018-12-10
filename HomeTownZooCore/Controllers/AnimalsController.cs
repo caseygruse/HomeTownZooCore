@@ -136,9 +136,9 @@ namespace HomeTownZooCore.Controllers
 
         // POST: Animals/Delete/5
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<string> DeleteConfirmed()
+        public async Task<string> Delete()
         {
             int id = Convert.ToInt32(Request.Form["id"]);
             var animal = await _context.Animal.FindAsync(id);
